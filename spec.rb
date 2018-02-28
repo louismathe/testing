@@ -30,14 +30,22 @@ class Person
   end
 
   def full_name
-    # binding.pry
     if @middle_name == ""
       "#{@first_name} #{@last_name}"
     else
-    "#{@first_name} #{@middle_name} #{@last_name}"
+      "#{@first_name} #{@middle_name} #{@last_name}"
+    end
   end
+
+  def full_name_with_middle_initial
+     # binding.pry
+    if @middle_name
+      "#{@first_name} #{@middle_name[0]} #{@last_name}"
+    else
+      "#{@first_name} #{@last_name}"
+    end
   end
-  # implement your behavior here
+
 end
 
 RSpec.describe Person do
@@ -64,7 +72,25 @@ RSpec.describe Person do
 
   end
 
-  # describe "#full_name_with_middle_initial"
+  describe "#full_name_with_middle_initial" do
+    it "returns first name, initial of middle name and last name with spaces" do
+      person = Person.new(
+       first_name: "David",
+       middle_name: "Heinemeier",
+       last_name: "Hansson"
+     )
+
+     expect(person.full_name_with_middle_initial).to eq "David H Hansson"
+    end
+      it "handles missing middle names" do
+    person = Person.new(
+      first_name: "John",
+      last_name: "Cena"
+    )
+
+    expect(person.full_name_with_middle_initial).to eq "John Cena"
+  end
+  end
   #
   # describe "#initials"
 end
