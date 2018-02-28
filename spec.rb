@@ -46,6 +46,13 @@ class Person
     end
   end
 
+  def initials
+    if @middle_name
+      "#{@first_name[0]}#{@middle_name[0]}#{@last_name[0]}"
+    else
+      "#{@first_name[0]}#{@last_name[0]}"
+    end
+  end
 end
 
 RSpec.describe Person do
@@ -82,7 +89,7 @@ RSpec.describe Person do
 
      expect(person.full_name_with_middle_initial).to eq "David H Hansson"
     end
-      it "handles missing middle names" do
+      it "& handles missing middle names" do
     person = Person.new(
       first_name: "John",
       last_name: "Cena"
@@ -92,5 +99,25 @@ RSpec.describe Person do
   end
   end
   #
-  # describe "#initials"
+  describe "#initials" do
+    it "concatenates first name initial, middle name initial, and last name initial with spaces" do
+      person = Person.new(
+       first_name: "David",
+       middle_name: "Heinemeier",
+       last_name: "Hansson"
+     )
+
+     expect(person.initials).to eq "DHH"
+    end
+
+    it "& handles missing middle names" do
+      person = Person.new(
+        first_name: "John",
+        last_name: "Cena"
+      )
+
+    expect(person.initials).to eq "JC"
+    end
+  end
+
 end
