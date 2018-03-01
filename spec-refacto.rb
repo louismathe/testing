@@ -1,44 +1,21 @@
+require 'pry-byebug'
 class Person
-  def initialize(first_name:, middle_name: nil, last_name:)
-    @first_name = first_name
-    @middle_name = middle_name
-    @last_name = last_name
+  def initialize(args)
+    @args = args
   end
 
-
   def full_name
-    if @middle_name == ""
-      "#{@first_name} #{@last_name}"
-    else
-      "#{@first_name} #{@middle_name} #{@last_name}"
-    end
+    @args.values.select{|v| !v.empty? }.join(" ")
   end
 
   def full_name_with_middle_initial
-    if @middle_name
-      "#{@first_name} #{@middle_name[0]} #{@last_name}"
-    else
-      "#{@first_name} #{@last_name}"
-    end
+    @args.map{|k, v| k == :middle_name ? v[0] : v }.join(" ")
   end
 
   def initials
-    if @middle_name
-      "#{@first_name[0]}#{@middle_name[0]}#{@last_name[0]}"
-    else
-      "#{@first_name[0]}#{@last_name[0]}"
-    end
+    @args.values.map { |e| e[0]}.join
   end
 end
-
-
-
-
-
-
-
-
-
 
 
 RSpec.describe Person do
